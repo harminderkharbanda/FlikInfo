@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FlikInfo</string>
+    <string name="error_message">An error has occurred. Please try again by clicking \'Refresh\' in the 3-dot menu. </string>
+    <string name="default_title">Movie Title</string>
+    <string name="default_overview">This is a movie</string>
+    <string name="default_rating">7/10</string>
+    <string name="sort_by">Sort By: Rating</string>
+    <string name="movie_thumbnail_desc">Movie Poster</string>
+    <string name="refresh">Refresh</string>
+
+</resources>
