@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -46,40 +46,42 @@
             android:fontFamily="serif-monospace"
             android:textStyle="bold"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.5">
+            android:orientation="horizontal"
+            android:alpha="0.5"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/tv_movie_rating"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/default_rating"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/tv_movie_release_date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignRight="@id/tv_movie_rating"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:textSize="20sp"
                 android:textStyle="italic"
                 android:visibility="visible"
-                android:layout_alignEnd="@id/tv_movie_rating" />
+                android:layout_weight="1"/>
 
-        </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
