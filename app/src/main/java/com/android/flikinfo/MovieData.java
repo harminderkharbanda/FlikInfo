@@ -11,6 +11,7 @@ public class MovieData {
     String overview;
     String releaseDate;
     int rating;
+    int id;
 
     public MovieData() {}
 }

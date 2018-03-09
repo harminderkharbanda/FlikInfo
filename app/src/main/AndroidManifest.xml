@@ -20,7 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetail"/>
+        <activity android:name=".MovieDetailActivity"/>
+
+        <provider
+            android:name=".data.MovieProvider"
+            android:authorities="com.android.flikinfo"
+            android:exported="false" />
+
+        <activity android:name=".FullReviewActivity"></activity>
     </application>
 
 </manifest>

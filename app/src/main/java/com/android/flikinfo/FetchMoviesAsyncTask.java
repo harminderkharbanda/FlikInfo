@@ -58,6 +58,7 @@ class FetchMoviesAsyncTask extends AsyncTask<String, Void, MovieData[]> {
                 currentMovie.overview = movieObject.getString(FlikInfoConstants.MOVIE_OVERVIEW);
                 currentMovie.releaseDate = movieObject.getString(FlikInfoConstants.MOVIE_RELEASE_DATE);
                 currentMovie.rating = movieObject.getInt(FlikInfoConstants.MOVIE_RATING);
+                currentMovie.id = movieObject.getInt(FlikInfoConstants.MOVIE_ID);
                 movieData[i] = currentMovie;
             }
             return movieData;

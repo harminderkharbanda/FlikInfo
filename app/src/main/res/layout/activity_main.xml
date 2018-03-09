@@ -14,17 +14,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_error_message"
-        android:textSize="20sp"
-        android:padding="16dp"
+        android:textSize="@dimen/error_text_size"
+        android:padding="@dimen/error_padding"
         android:visibility="invisible"
         android:layout_gravity="center"
         android:text="@string/error_message"/>
 
     <ProgressBar
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
         android:id="@+id/pb_loading_indicator"
         android:layout_gravity="center"
         android:visibility="invisible"/>
+
+    <ImageView
+        android:src="@drawable/nothing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/no_favourite_iv_size"
+        android:id="@+id/iv_nothing"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:contentDescription="@string/no_favorites_text"/>
 
 </merge>
