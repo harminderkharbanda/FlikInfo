@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +57,19 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     private Cursor movieCursor;
     private String posterPath;
 
+    private ScrollView mScrollView;
+
+    private static final String TRAILERS_RV_SAVED_POSITION = "trailers_rv_saved_position";
+    private static final String REVIEWS_RV_SAVED_POSITION = "reviews_rv_saved_position";
+    private Parcelable tailersSavedState;
+    private Parcelable reviewsSavedState;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        mScrollView = findViewById(R.id.movie_detail_scrollview);
 
         movieTitle = findViewById(R.id.tv_movie_title);
         moviePoster = findViewById(R.id.iv_movie_image);
@@ -162,6 +173,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             movieTrailersData.clear();
         }
         trailersAdapter.setTrailerData(movieTrailersData);
+        restoreTrailersPosition();
         trailersAdapter.notifyDataSetChanged();
     }
 
@@ -175,6 +187,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             movieReviewsData.clear();
         }
         reviewsAdapter.setReviewsData(movieReviewsData);
+        restoreReviewsPosition();
         reviewsAdapter.notifyDataSetChanged();
     }
 
@@ -318,5 +331,38 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             this.finish();
         }
         return true;
+    }
+
+    private void restoreTrailersPosition() {
+        if (tailersSavedState != null) {
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(tailersSavedState);
+        }
+    }
+
+    private void restoreReviewsPosition() {
+        if (reviewsSavedState != null) {
+            mReviewsRecyclerView.getLayoutManager().onRestoreInstanceState(reviewsSavedState);
+        }
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray("SCROLL_POSITION",
+                new int[]{ mScrollView.getScrollX(), mScrollView.getScrollY()});
+        outState.putParcelable(TRAILERS_RV_SAVED_POSITION, mRecyclerView.getLayoutManager().onSaveInstanceState());
+        outState.putParcelable(REVIEWS_RV_SAVED_POSITION, mReviewsRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        final int[] position = savedInstanceState.getIntArray("SCROLL_POSITION");
+        if(position != null)
+            mScrollView.post(new Runnable() {
+                public void run() {
+                    mScrollView.scrollTo(position[0], position[1]);
+                }
+            });
+        tailersSavedState = savedInstanceState.getParcelable(TRAILERS_RV_SAVED_POSITION);
+        reviewsSavedState = savedInstanceState.getParcelable(REVIEWS_RV_SAVED_POSITION);
     }
 }

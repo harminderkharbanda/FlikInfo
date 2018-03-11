@@ -3,6 +3,7 @@ package com.android.flikinfo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
     MovieData[] movieArrayData;
     private static final int TASK_LOADER_ID = 1;
     int movieType = 1;
+    private static final String SAVED_POSITION = "saved_position";
+    Parcelable layoutManagerSavedState;
 
 
     @Override
@@ -124,7 +127,11 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
             movieData.clear();
         }
         moviesAdapter.setMovieData(movieData);
+        if (layoutManagerSavedState != null) {
+            restoreLayoutManagerPosition();
+        }
         moviesAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -161,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
             }
         }
 
-        if(itemId == R.id.ref_movie) {
+        if (itemId == R.id.ref_movie) {
             if (sortByPopular) {
                 doMoviesDataFetched(null);
                 loadMoviesData(FlikInfoConstants.URLConstants.POPULAR_MOVIES_URL);
@@ -250,4 +257,23 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelable(SAVED_POSITION, mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            layoutManagerSavedState = savedInstanceState.getParcelable(SAVED_POSITION);
+        }
+    }
+
+    private void restoreLayoutManagerPosition() {
+        if (layoutManagerSavedState != null) {
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(layoutManagerSavedState);
+        }
+    }
 }
